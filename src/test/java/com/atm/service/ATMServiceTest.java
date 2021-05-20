@@ -22,17 +22,17 @@ class ATMServiceTest {
     }
 
     @Test
-    void shouldSetATMBalance() {
+    void shouldSetATMBalance () {
         BigDecimal atmBalanceToBeSet = new BigDecimal(10000);
         atmService.setBalance(atmBalanceToBeSet);
-        assertEquals(atmBalanceToBeSet,atmService.getATMBalance());
+        assertEquals(atmBalanceToBeSet, atmService.getATMBalance());
     }
 
     @Test
-    void shouldGetATMBalance() {
+    void shouldGetATMBalance () {
         BigDecimal atmBalanceToBeGet = new BigDecimal(10000);
         atmService.setBalance(atmBalanceToBeGet);
-        assertEquals(atmBalanceToBeGet,atmService.getATMBalance());
+        assertEquals(atmBalanceToBeGet, atmService.getATMBalance());
 
     }
 }

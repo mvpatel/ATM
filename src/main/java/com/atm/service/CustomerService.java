@@ -6,6 +6,7 @@ import com.atm.exceptions.AccountException;
 import com.atm.exceptions.FundException;
 
 import java.math.BigDecimal;
+
 public interface CustomerService {
     /**
      * Customer will be added in the Customer Map {@link java.util.Map} and then {@link CustomerDTO} will be returned
@@ -33,6 +34,7 @@ public interface CustomerService {
     /**
      * If given Account Number and password won't be matched then {@link AccountException} will be thrown
      * If given Account Number and password will be matched then {@link CustomerDTO} should be returned
+     *
      * @param accountNumber Account Number
      * @param pin           Pin for the Account Number
      * @return {@link CustomerDTO} should be returned for success full journey

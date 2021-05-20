@@ -8,13 +8,13 @@ import com.atm.service.impl.CustomerServiceImpl;
 
 public class AtmApplication {
 
-	private static CustomerController customerController;
-	private static CustomerService customerService = new CustomerServiceImpl();
-	private static ATMService atmService = new ATMServiceImpl();
+    private static CustomerController customerController;
+    private static CustomerService customerService = new CustomerServiceImpl();
+    private static ATMService atmService = new ATMServiceImpl();
 
-	public static void main(String[] args) {
-		customerController = new CustomerController(customerService, atmService);
-		customerController.init();
-	}
+    public static void main (String[] args) {
+        customerController = new CustomerController(customerService, atmService);
+        customerController.init();
+    }
 
 }

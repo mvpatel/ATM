@@ -3,6 +3,7 @@ package com.atm.service.impl;
 import com.atm.service.ATMService;
 
 import java.math.BigDecimal;
+
 public class ATMServiceImpl implements ATMService {
     private BigDecimal atmBalance = new BigDecimal(8000);
 

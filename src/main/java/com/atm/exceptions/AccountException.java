@@ -1,7 +1,7 @@
 package com.atm.exceptions;
 
-public class AccountException extends RuntimeException{
-    public AccountException(String errorMessage) {
+public class AccountException extends RuntimeException {
+    public AccountException (String errorMessage) {
         super(errorMessage);
     }
 }

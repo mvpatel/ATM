@@ -44,12 +44,12 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void shouldAddCustomerTest() {
+    void shouldAddCustomerTest () {
         assertEquals(customerDTO, customerService.addCustomer(customerDTO));
     }
 
     @Test
-    void shouldGetCustomerTest() {
+    void shouldGetCustomerTest () {
         customerDTO.setAccountNumber("0987654321");
         customerService.addCustomer(customerDTO);
 
@@ -60,7 +60,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void shouldGetCustomerWhereCustomerIsNotAddedTest() {
+    void shouldGetCustomerWhereCustomerIsNotAddedTest () {
         customerDTO.setAccountNumber("123123123");
         String accountNumber = customerDTO.getAccountNumber();
         String pin = customerDTO.getPin();
@@ -72,7 +72,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void shouldWithdrawAmountTest() {
+    void shouldWithdrawAmountTest () {
         BigDecimal withdrawAmount = new BigDecimal(100);
 
         when(mockAtmService.getATMBalance()).thenReturn(new BigDecimal(8000));
@@ -82,8 +82,8 @@ class CustomerServiceImplTest {
                 customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount);
 
         assertNotNull(customerDTOAfterWithdrawal);
-        assertEquals(new BigDecimal(800),customerDTOAfterWithdrawal.getBalance());
-        assertEquals(customerDTO.getOverDraft(),customerDTOAfterWithdrawal.getOverDraft());
+        assertEquals(new BigDecimal(800), customerDTOAfterWithdrawal.getBalance());
+        assertEquals(customerDTO.getOverDraft(), customerDTOAfterWithdrawal.getOverDraft());
 
 //
 //        verify(mockAtmService).setBalance(800);
@@ -92,42 +92,42 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void shouldWithdrawFullAmountTest() {
+    void shouldWithdrawFullAmountTest () {
         BigDecimal withdrawAmount = new BigDecimal(1000);
         BigDecimal zeroAmount = new BigDecimal(0);
         CustomerDTO customerDTOAfterWithdrawal =
                 customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount);
 
         assertNotNull(customerDTOAfterWithdrawal);
-        assertEquals(zeroAmount,customerDTOAfterWithdrawal.getBalance());
-        assertEquals(zeroAmount,customerDTOAfterWithdrawal.getOverDraft());
+        assertEquals(zeroAmount, customerDTOAfterWithdrawal.getBalance());
+        assertEquals(zeroAmount, customerDTOAfterWithdrawal.getOverDraft());
     }
 
     @Test
-    void shouldWithdrawFullBalanceOnlyTest() {
+    void shouldWithdrawFullBalanceOnlyTest () {
         BigDecimal withdrawAmount = new BigDecimal(900);
         BigDecimal zeroAmount = new BigDecimal(0);
         CustomerDTO customerDTOAfterWithdrawal =
                 customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount);
 
         assertNotNull(customerDTOAfterWithdrawal);
-        assertEquals(zeroAmount,customerDTOAfterWithdrawal.getBalance());
-        assertEquals(customerDTO.getOverDraft(),customerDTOAfterWithdrawal.getOverDraft());
+        assertEquals(zeroAmount, customerDTOAfterWithdrawal.getBalance());
+        assertEquals(customerDTO.getOverDraft(), customerDTOAfterWithdrawal.getOverDraft());
     }
 
     @Test
-    void shouldWithdrawFullBalanceAndSomeOfOverDraftAmountTest() {
+    void shouldWithdrawFullBalanceAndSomeOfOverDraftAmountTest () {
         BigDecimal withdrawAmount = new BigDecimal(950);
         CustomerDTO customerDTOAfterWithdrawal =
                 customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount);
 
         assertNotNull(customerDTOAfterWithdrawal);
-        assertEquals(new BigDecimal(0),customerDTOAfterWithdrawal.getBalance());
+        assertEquals(new BigDecimal(0), customerDTOAfterWithdrawal.getBalance());
         assertEquals(new BigDecimal(50), customerDTOAfterWithdrawal.getOverDraft());
     }
 
     @Test
-    void shouldWithdrawMoreAmountThanFullBalanceAndOverDraftAmount_ShouldThrowFundExceptionTest() {
+    void shouldWithdrawMoreAmountThanFullBalanceAndOverDraftAmount_ShouldThrowFundExceptionTest () {
         BigDecimal withdrawAmount = new BigDecimal(1100);
         String accountNumber = customerDTO.getAccountNumber();
 
@@ -139,7 +139,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void shouldWithdrawMoreAmountThanATMBalance_ShouldThrowATMExceptionTest() {
+    void shouldWithdrawMoreAmountThanATMBalance_ShouldThrowATMExceptionTest () {
         BigDecimal withdrawAmount = new BigDecimal(9000);
         String accountNumber = customerDTO.getAccountNumber();
         ATMException atmException = assertThrows(ATMException.class,

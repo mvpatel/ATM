@@ -75,3 +75,10 @@ Follow following Steps to run the Application
         Comments should be added in details.
         More tests should be added for ATM Balance.
         Validation should be added for DTOs
+        SonarQube should be added in the pom file
+        Jacoco test Coverage plugin required to be added in the pom file
+        Minimum 85% Test Coverage required should be added under Jacoco
+
+# Git Repository: https://github.com/mvpatel/ATM
+# Sequence Diagrams are added in the folder: ATM/Document/SequenceDiagrams
+# Test Coverage is added in the folder: ATM/Document/TestCoverage

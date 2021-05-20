@@ -18,7 +18,6 @@ public class CustomerServiceImpl implements CustomerService {
     private ATMService atmService = new ATMServiceImpl();
 
 
-
     private Map<String, CustomerDTO> customers = new HashMap<>();
 
     /**
@@ -29,6 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
         customers.put(customerDTO.getAccountNumber(), customerDTO);
         return customers.get(customerDTO.getAccountNumber());
     }
+
     /**
      * @inheritDoc
      */
@@ -61,7 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @inheritDoc
      */
     @Override
-    public CustomerDTO getCustomer (String accountNumber, String pin) throws AccountException{
+    public CustomerDTO getCustomer (String accountNumber, String pin) throws AccountException {
         CustomerDTO customerDTO = customers.get(accountNumber);
         if (Objects.nonNull(customerDTO) && customerDTO.getPin().equals(pin)) {
             return customers.get(accountNumber);
