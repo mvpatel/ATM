@@ -10,7 +10,7 @@ import com.atm.service.CustomerService;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-public class CustomerController {
+public class ATMController {
 
     private CustomerService customerService;
     private ATMService atmService;
@@ -18,7 +18,7 @@ public class CustomerController {
     private Scanner scanner = new Scanner(System.in);
     private CustomerDTO currentCustomer;
 
-    public CustomerController (CustomerService customerService, ATMService atmService) {
+    public ATMController (CustomerService customerService, ATMService atmService) {
         this.customerService = customerService;
         this.atmService = atmService;
     }
