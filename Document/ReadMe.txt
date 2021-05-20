@@ -79,7 +79,9 @@ Follow following Steps to run the Application
         Jacoco test Coverage plugin required to be added in the pom file
         Minimum 85% Test Coverage required should be added under Jacoco
         Test Coverage should be added for ATMDTO
+        Git Commits should be improved.
 
-# Git Repository: https://github.com/mvpatel/ATM
 # Sequence Diagrams are added in the folder: ATM/Document/SequenceDiagrams
+# UML Diagrams are added in the folder: ATM/Document/UMLDiagrams
 # Test Coverage is added in the folder: ATM/Document/TestCoverage
+# Git Repository: https://github.com/mvpatel/ATM
