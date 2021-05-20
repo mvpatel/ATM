@@ -4,21 +4,20 @@ import com.atm.dto.CustomerDTO;
 import com.atm.exceptions.ATMException;
 import com.atm.exceptions.AccountException;
 import com.atm.exceptions.FundException;
+import com.atm.service.ATMService;
 import com.atm.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-@Service
 public class CustomerServiceImpl implements CustomerService {
 
     // make Autowired working
-    @Autowired
-    private ATMServiceImpl atmService = new ATMServiceImpl();
+    private ATMService atmService = new ATMServiceImpl();
+
+
 
     private Map<String, CustomerDTO> customers = new HashMap<>();
 
@@ -43,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ATMException("ATM_Err: ATM not have sufficient fund, please try again later");
         } else if (currentCustomerBalance.compareTo(amount) >= 0) {
             currentCustomer.setBalance(currentCustomerBalance.subtract(amount));
+            atmService.setBalance(atmService.getATMBalance().subtract(amount));
             customers.put(currentCustomer.getAccountNumber(), currentCustomer);
 
             return customers.get(currentCustomer.getAccountNumber());
@@ -51,6 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
                 && currentCustomerOverDraft.compareTo(amount.subtract(currentCustomerBalance)) >= 0) {
             currentCustomer.setBalance(new BigDecimal(0));
             currentCustomer.setOverDraft(currentCustomer.getOverDraft().subtract(amount.subtract(currentCustomerBalance)));
+            atmService.setBalance(atmService.getATMBalance().subtract(amount));
             return customers.get(currentCustomer.getAccountNumber());
         }
         throw new FundException("FUND_ERR: Your Balance is not sufficient to withdraw requested amount");

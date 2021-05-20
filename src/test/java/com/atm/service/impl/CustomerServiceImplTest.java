@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 
@@ -30,7 +29,6 @@ class CustomerServiceImplTest {
     @InjectMocks
     private CustomerService customerService = new CustomerServiceImpl();
 
-    @MockBean
     private ATMService mockAtmService = mock(ATMService.class);
     private CustomerDTO customerDTO;
 
@@ -46,12 +44,12 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    public void shouldAddCustomerTest() {
+    void shouldAddCustomerTest() {
         assertEquals(customerDTO, customerService.addCustomer(customerDTO));
     }
 
     @Test
-    public void shouldGetCustomerTest() {
+    void shouldGetCustomerTest() {
         customerDTO.setAccountNumber("0987654321");
         customerService.addCustomer(customerDTO);
 
@@ -62,17 +60,19 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    public void shouldGetCustomerWhereCustomerIsNotAddedTest() {
+    void shouldGetCustomerWhereCustomerIsNotAddedTest() {
         customerDTO.setAccountNumber("123123123");
+        String accountNumber = customerDTO.getAccountNumber();
+        String pin = customerDTO.getPin();
         AccountException accountException = assertThrows(AccountException.class,
-                () -> customerService.getCustomer(customerDTO.getAccountNumber(), customerDTO.getPin()));
+                () -> customerService.getCustomer(accountNumber, pin));
 
         assertEquals("ACCOUNT_Err: User not found by given username and Pin please try again",
                 accountException.getMessage());
     }
 
     @Test
-    public void shouldWithdrawAmountTest() {
+    void shouldWithdrawAmountTest() {
         BigDecimal withdrawAmount = new BigDecimal(100);
 
         when(mockAtmService.getATMBalance()).thenReturn(new BigDecimal(8000));
@@ -84,13 +84,15 @@ class CustomerServiceImplTest {
         assertNotNull(customerDTOAfterWithdrawal);
         assertEquals(new BigDecimal(800),customerDTOAfterWithdrawal.getBalance());
         assertEquals(customerDTO.getOverDraft(),customerDTOAfterWithdrawal.getOverDraft());
+
 //
+//        verify(mockAtmService).setBalance(800);
 //        verify(mockAtmService).getATMBalance();
 //        verifyNoMoreInteractions(mockAtmService);
     }
 
     @Test
-    public void shouldWithdrawFullAmountTest() {
+    void shouldWithdrawFullAmountTest() {
         BigDecimal withdrawAmount = new BigDecimal(1000);
         BigDecimal zeroAmount = new BigDecimal(0);
         CustomerDTO customerDTOAfterWithdrawal =
@@ -102,7 +104,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    public void shouldWithdrawFullBalanceOnlyTest() {
+    void shouldWithdrawFullBalanceOnlyTest() {
         BigDecimal withdrawAmount = new BigDecimal(900);
         BigDecimal zeroAmount = new BigDecimal(0);
         CustomerDTO customerDTOAfterWithdrawal =
@@ -114,7 +116,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    public void shouldWithdrawFullBalanceAndSomeOfOverDraftAmountTest() {
+    void shouldWithdrawFullBalanceAndSomeOfOverDraftAmountTest() {
         BigDecimal withdrawAmount = new BigDecimal(950);
         CustomerDTO customerDTOAfterWithdrawal =
                 customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount);
@@ -125,22 +127,23 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    public void shouldWithdrawMoreAmountThanFullBalanceAndOverDraftAmount_ShouldThrowFundExceptionTest() {
+    void shouldWithdrawMoreAmountThanFullBalanceAndOverDraftAmount_ShouldThrowFundExceptionTest() {
         BigDecimal withdrawAmount = new BigDecimal(1100);
+        String accountNumber = customerDTO.getAccountNumber();
 
         FundException fundException = assertThrows(FundException.class,
-                () -> customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount));
+                () -> customerService.withdrawAmount(accountNumber, withdrawAmount));
 
         assertEquals("FUND_ERR: Your Balance is not sufficient to withdraw requested amount",
                 fundException.getMessage());
     }
 
     @Test
-    public void shouldWithdrawMoreAmountThanATMBalance_ShouldThrowATMExceptionTest() {
+    void shouldWithdrawMoreAmountThanATMBalance_ShouldThrowATMExceptionTest() {
         BigDecimal withdrawAmount = new BigDecimal(9000);
-
+        String accountNumber = customerDTO.getAccountNumber();
         ATMException atmException = assertThrows(ATMException.class,
-                () -> customerService.withdrawAmount(customerDTO.getAccountNumber(), withdrawAmount));
+                () -> customerService.withdrawAmount(accountNumber, withdrawAmount));
 
         assertEquals("ATM_Err: ATM not have sufficient fund, please try again later",
                 atmException.getMessage());

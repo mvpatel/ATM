@@ -6,7 +6,6 @@ import com.atm.exceptions.AccountException;
 import com.atm.exceptions.FundException;
 
 import java.math.BigDecimal;
-
 public interface CustomerService {
     /**
      * Customer will be added in the Customer Map {@link java.util.Map} and then {@link CustomerDTO} will be returned

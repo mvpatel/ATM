@@ -10,13 +10,13 @@
         <module name="atm" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
+    <bytecodeTargetLevel target="11">
       <module name="atm" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="atm" options="-parameters" />
+      <module name="atm" options="" />
     </option>
   </component>
 </project>
